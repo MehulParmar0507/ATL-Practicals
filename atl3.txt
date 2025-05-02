@@ -29,6 +29,8 @@ cd todoapp(Make sure that You Have Saved Your File in C Directory)
 
 ###***Step 6. Run The Following Commands**
 ```cmd
-1. rails db:migrate
-2. rails server.(This Will Run Your Web App In Port No. 3000).
+1. Bundle Install
+2. rails db:migrate
+3. rails server.(This Will Run Your Web App In Port No. 3000).
 ```
+
