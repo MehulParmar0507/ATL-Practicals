@@ -24,7 +24,7 @@ npm install -g yarn
 
 ### **step 5. Navigate into the App & Set Up the Database**  
 ```cmd
-cd todoapp(Make sure that You Have Saved Your File in C Directory)
+cd todoapp(Make sure that You Have Saved Your File in C Directory like this :- C:/Users/owner's_name/todoapp2)
 ```
 
 ###***Step 6. Run The Following Commands**
