@@ -1,0 +1,87 @@
+ATL 1 Updated Code
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pandas.plotting import andrews_curves, parallel_coordinates, radviz
+
+# Set Seaborn style
+sns.set(style="white", color_codes=True)
+
+# Load both datasets
+df1 = pd.read_csv("flowers1.csv")
+df2 = pd.read_csv("flowers2.csv")
+
+# Add a column to indicate which dataset each row comes from
+df1["Dataset"] = "flowers1"
+df2["Dataset"] = "flowers2"
+
+# Combine both datasets
+combined_df = pd.concat([df1, df2], ignore_index=True)
+
+# Print basic info
+print(combined_df.head())
+print(combined_df["Dataset"].value_counts())
+
+# ---------------------- Visualizations ----------------------
+
+# Scatter plot (combined)
+sns.scatterplot(data=combined_df, x="SepallengthCm", y="SepalWidthCm", hue="Dataset")
+plt.title("Sepal Length vs Width (by Dataset)")
+plt.show()
+
+# Joint plot
+sns.jointplot(data=combined_df, x="SepallengthCm", y="SepalWidthCm", hue="Dataset", height=6)
+plt.show()
+
+# FacetGrid scatter by Species
+sns.FacetGrid(combined_df, hue="Species", col="Dataset", height=5) \
+   .map_dataframe(sns.scatterplot, x="SepallengthCm", y="SepalWidthCm") \
+   .add_legend()
+plt.show()
+
+# Boxplot by Species and Dataset
+plt.figure(figsize=(10, 6))
+sns.boxplot(x="Species", y="PetalLengthCm", hue="Dataset", data=combined_df)
+plt.title("Petal Length by Species and Dataset")
+plt.show()
+
+# Violin plot
+plt.figure(figsize=(10, 6))
+sns.violinplot(x="Species", y="PetalLengthCm", hue="Dataset", data=combined_df, split=True)
+plt.title("Violin Plot by Species and Dataset")
+plt.show()
+
+# KDE Plot
+sns.FacetGrid(combined_df, hue="Species", row="Dataset", height=4, aspect=2) \
+   .map(sns.kdeplot, "PetalLengthCm", fill=True) \
+   .add_legend()
+plt.show()
+
+# Pairplot
+sns.pairplot(combined_df, hue="Species", corner=True, diag_kind="kde")
+plt.suptitle("Pairplot by Species (Combined)", y=1.02)
+plt.show()
+
+# Boxplot grouped by Species
+combined_df.boxplot(by="Species", figsize=(10, 6))
+plt.suptitle("Boxplot Grouped by Species (All Data)")
+plt.show()
+
+# Andrews Curves
+plt.figure(figsize=(10, 5))
+andrews_curves(combined_df, "Species", color=sns.color_palette("Set2"))
+plt.title("Andrews Curves by Species")
+plt.show()
+
+# Parallel Coordinates
+plt.figure(figsize=(10, 5))
+parallel_coordinates(combined_df, "Species", color=sns.color_palette("Dark2"))
+plt.title("Parallel Coordinates by Species")
+plt.show()
+
+# Radviz
+plt.figure(figsize=(8, 8))
+radviz(combined_df, "Species", color=sns.color_palette("tab10"))
+plt.title("Radviz Plot")
+plt.show()
